@@ -44,7 +44,11 @@ function placeInMiddle(arr, vals){
   return [...arr.slice(0, arr.length/2), ...vals, ...arr.slice(arr.length/2, arr.length)];
 }
 
-
+function placeInMiddle2(arr, values) {
+  let mid = Math.floor(arr.length / 2);
+  arr.splice(mid, 0, ...values);
+  return arr;
+}
 
 console.log(placeInMiddle([1,2,6,7],[3,4,5])); // [1,2,3,4,5,6,7]
 console.log(placeInMiddle([1],[3,4,5])); // [3,4,5,1]
@@ -95,6 +99,10 @@ function sumEvenArgs(...args){
     return sum;
 }
 
+function sumeEvenArgs2(...args) {
+  return args.reduce((acc, next) => next % 2 === 0 ? acc += next : acc, 0);
+}
+
 console.log(sumEvenArgs(1,2,3,4)); // 6
 console.log(sumEvenArgs(1,2,6)); // 8
 console.log(sumEvenArgs(1,2)); // 2
@@ -132,18 +140,22 @@ Examples:
 
 */
 
+console.log(" * * * * * *");
+console.log(" *  FLIP   * ");
+console.log(" * * * * * *");
 
-function flip(fn, thisArg){
+
+function flip(fn, thisArg, ...outerArgs){
   
-  return function(...args) {
-    var flipped = args.reverse();
-    fn.call(thisArg, ...flipped);
+  return function(...innerArgs) {
+    let allArgs = outerArgs.concat(innerArgs).slice(0, fn.length);
+    return fn.apply(thisArg, allArgs.reverse());
   }
 }
 
 function personSubtract(a,b,c){
-  console.log(a, b, c);
-  console.log(this.firstName + " subtracts " + (a-b-c));
+//  console.log(a, b, c);
+//  console.log(this.firstName + " subtracts " + (a-b-c));
   return this.firstName + " subtracts " + (a-b-c);
 }
 
@@ -152,7 +164,7 @@ var person = {
 }
 
 function subtractFourNumbers(a, b, c, d) {
-  console.log(a, b, c, d);
+//  console.log(a, b, c, d);
   return ((a - b) - c ) - d;
 }
 
@@ -162,14 +174,14 @@ console.log(flipFn(3,2,1)); // "Elie subtracts -4"
 var flipFn2 = flip(personSubtract, person, 5,6);
 console.log(flipFn2(7,8)); // "Elie subtracts -4"
 
-//console.log(flip(subtractFourNumbers,this,1)(2,3,4)); // -2
-//console.log(flip(subtractFourNumbers,this,1,2)(3,4)); // -2
-//console.log(flip(subtractFourNumbers,this,1,2,3)(4)); // -2
-//console.log(flip(subtractFourNumbers,this,1,2,3,4)()); // -2
-//console.log(flip(subtractFourNumbers,this)(1,2,3,4)); // -2
-//console.log(flip(subtractFourNumbers,this,1,2,3)(4,5,6,7)); // -2
-//console.log(flip(subtractFourNumbers,this)(1,2,3,4,5,6,7,8,9,10)); // -2
-//console.log(flip(subtractFourNumbers,this,11,12,13,14,15)(1,2,3,4,5,6,7,8,9,10)); // -22
+console.log(flip(subtractFourNumbers,this,1)(2,3,4)); // -2
+console.log(flip(subtractFourNumbers,this,1,2)(3,4)); // -2
+console.log(flip(subtractFourNumbers,this,1,2,3)(4)); // -2
+console.log(flip(subtractFourNumbers,this,1,2,3,4)()); // -2
+console.log(flip(subtractFourNumbers,this)(1,2,3,4)); // -2
+console.log(flip(subtractFourNumbers,this,1,2,3)(4,5,6,7)); // -2
+console.log(flip(subtractFourNumbers,this)(1,2,3,4,5,6,7,8,9,10)); // -2
+console.log(flip(subtractFourNumbers,this,11,12,13,14,15)(1,2,3,4,5,6,7,8,9,10)); // -22
 
 console.log("===========================");
 console.log();
@@ -206,14 +218,21 @@ Examples:
 
 */
 
-function bind(fn, thisArg, ...other){
-  return function(...args) {
-    fn.call(thisArg, args, other);
+console.log(" * * * * * *");
+console.log(" *  BIND   * ");
+console.log(" * * * * * *");
+
+function bind(fn, thisArg, ...outerArgs){
+  
+  
+  return function(...innerArgs) {
+    let allArgs = outerArgs.concat(innerArgs).slice(0, fn.length);
+    return fn.apply(thisArg, allArgs,);
   }
 }
 
 function firstNameFavoriteColor(favoriteColor){
-  console.log(this.firstName + "'s favorite color is " + favoriteColor);
+//  console.log(this.firstName + "'s favorite color is " + favoriteColor);
   return this.firstName + "'s favorite color is " + favoriteColor
 }
 
@@ -231,12 +250,12 @@ function addFourNumbers(a,b,c,d){
     return a+b+c+d;
 }
 
-//console.log(bind(addFourNumbers,this,1)(2,3,4)); // 10
-//console.log(bind(addFourNumbers,this,1,2)(3,4)); // 10
-//console.log(bind(addFourNumbers,this,1,2,3)(4)); // 10
-//console.log(bind(addFourNumbers,this,1,2,3,4)()); // 10
-//console.log(bind(addFourNumbers,this)(1,2,3,4)); // 10
-//console.log(bind(addFourNumbers,this)(1,2,3,4,5,6,7,8,9,10)); // 10
+console.log(bind(addFourNumbers,this,1)(2,3,4)); // 10
+console.log(bind(addFourNumbers,this,1,2)(3,4)); // 10
+console.log(bind(addFourNumbers,this,1,2,3)(4)); // 10
+console.log(bind(addFourNumbers,this,1,2,3,4)()); // 10
+console.log(bind(addFourNumbers,this)(1,2,3,4)); // 10
+console.log(bind(addFourNumbers,this)(1,2,3,4,5,6,7,8,9,10)); // 10
 
 console.log("===========================");
 console.log();
