@@ -226,8 +226,7 @@ function bind(fn, thisArg, ...outerArgs){
   
   
   return function(...innerArgs) {
-    let allArgs = outerArgs.concat(innerArgs).slice(0, fn.length);
-    return fn.apply(thisArg, allArgs,);
+    return fn.apply(thisArg, [...innerArgs, ...outerArgs]);
   }
 }
 
