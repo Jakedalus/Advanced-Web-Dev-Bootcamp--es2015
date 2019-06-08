@@ -20,7 +20,7 @@ Examples:
 */
 
 // you will have to pass in the correct parameters for this function!
-function printFullName({first, last} = {}){
+function printFullName({first, last}){
   return `Your full name is ${first} ${last}`;
 }
 
