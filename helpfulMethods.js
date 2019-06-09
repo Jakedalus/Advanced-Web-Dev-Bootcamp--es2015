@@ -55,6 +55,7 @@ function areAllNumbersFinite(arr){
 
 var finiteNums = [4,-3,2.2]
 var finiteNumsExceptOne = [4,-3,2.2,NaN]
+console.log(" ** areAllNumbersFinite ** ");
 console.log(areAllNumbersFinite(finiteNums)); // true
 console.log(areAllNumbersFinite(finiteNumsExceptOne)); // false
 
