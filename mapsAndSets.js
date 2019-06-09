@@ -238,6 +238,16 @@ function countPairs(arr, num){
   return count;
 }
 
+function countPairs2(arr, num){
+  const st = new Set(arr);
+  let count = 0;
+  for (let val of st) {
+    if (st.has(num - val)) count++;
+  }
+  
+  return count;
+}
+
 console.log();
 console.log("============================");
 console.log(" ** TESTING countPairs ** ");
@@ -248,3 +258,14 @@ console.log(countPairs([1,2,3,4,5],10)); // 0
 console.log(countPairs([],10)); // 0
 console.log(countPairs([5,4,-10,6,-20,16],-4)); // 2
 console.log(countPairs([0,-4],-4)); // 1
+
+console.log();
+console.log("============================");
+console.log(" ** TESTING countPairs2 ** ");
+console.log(countPairs2([8,2,6,4,10,0],10)); // 3
+console.log(countPairs2([8,2],10)); // 1
+console.log(countPairs2([1,2],10)); // 0
+console.log(countPairs2([1,2,3,4,5],10)); // 0
+console.log(countPairs2([],10)); // 0
+console.log(countPairs2([5,4,-10,6,-20,16],-4)); // 2
+console.log(countPairs2([0,-4],-4)); // 1
