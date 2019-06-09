@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+<!--    <link rel="stylesheet" href="css/style.css">-->
+  </head>
+  <body>
+    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+      console.log("In browser");
+      function starWarsString(id){
+        var str = '';
+        return $.getJSON(`https://swapi.co/api/people/${id}/`).then(function(data){
+          str += `${data.name} is featured in `;
+          var filmData = data.films[0]
+          return $.getJSON(filmData);
+        }).then(function(res){
+          str += `${res.title}, directed by ${res.director} `
+          var planetData = res.planets[0]
+          return $.getJSON(planetData)
+        }).then(function(res){
+          str += `and it takes place on ${res.name}`;
+          return str;
+        }).then(function(finalString){
+          return finalString
+        })
+      }
+      
+      starWarsString(1).then(function(data){
+        console.log(data)
+      });
+      
+      starWarsString(3).then(function(data){
+        console.log(data)
+      });
+      
+      console.log(starWarsString(1));
+    
+    </script>
+  </body>
+</html>
