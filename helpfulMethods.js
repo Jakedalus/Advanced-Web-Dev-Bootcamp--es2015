@@ -50,7 +50,7 @@ areAllNumbersFinite(finiteNumsExceptOne) // false
 */
 
 function areAllNumbersFinite(arr){
-  return arr.every((num) => Number.isFinite(num));
+  return arr.every(Number.isFinite);
 }
 
 var finiteNums = [4,-3,2.2]
