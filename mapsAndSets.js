@@ -241,7 +241,8 @@ function countPairs(arr, num){
 function countPairs2(arr, num){
   const st = new Set(arr);
   let count = 0;
-  for (let val of st) {
+  for (let val of arr) {
+    st.delete(val);
     if (st.has(num - val)) count++;
   }
   
