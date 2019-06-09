@@ -66,8 +66,8 @@ class MessageBoard {
     */
 
     
-    findMessageByValue(){
-      
+    findMessageByValue(message){
+      return this.messages.values().filter(msg => msg === message);
     }
     
     /*
@@ -137,6 +137,16 @@ console.log(m3.findMessageById(2)); // 'hi!'
 console.log(m3.findMessageById(3)); // 'whats up?'
 console.log(m3.findMessageById(4)); // undefined
 console.log(m3.findMessageById()); // undefined
+
+var m4 = new MessageBoard
+console.log(m4.addMessage('hello!'));
+console.log(m4.addMessage('hi!'));
+console.log(m4.addMessage('whats up?'));
+console.log(m4.findMessageByValue('hello!')); // 'hello!'
+console.log(m4.findMessageByValue('hi!')); // 'hi!'
+console.log(m4.findMessageByValue('whats up?')); // 'whats up?'
+console.log(m4.findMessageByValue('nothing here')); // undefined
+console.log(m4.findMessageByValue()); // undefined
 
 /*
 Write a function called uniqueValues which accepts an array and returns the number of unique values in the array
