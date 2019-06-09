@@ -67,7 +67,7 @@ class MessageBoard {
 
     
     findMessageByValue(message){
-      return this.messages.values().filter(msg => msg === message);
+      return Array.from(this.messages.values()).filter(msg => msg === message)[0];
     }
     
     /*
@@ -83,8 +83,9 @@ class MessageBoard {
     m.removeMessage() // m
     */
     
-    removeMessage(){
-        
+    removeMessage(id){
+      this.messages.delete(id);
+      return this;
     }
     
     /*
@@ -98,7 +99,7 @@ class MessageBoard {
     */
     
     numberOfMessages(){
-        
+      return this.messages.size;
     }
     
     /*
@@ -112,23 +113,26 @@ class MessageBoard {
     */
     
     messagesToArray(){
-        
+      return Array.from(this.messages.values());
     }
 }
 
-var m1 = new MessageBoard  
+console.log(" ** TESTING CONSTRUCTOR ** ");
+var m1 = new MessageBoard();
 console.log(m1.hasOwnProperty('messages')); // true
 console.log(m1.messages.constructor); // function Map() { [native code] }
 console.log(m1.hasOwnProperty('id')); // true
 console.log(m1.id); // 1
 
-var m2 = new MessageBoard
+console.log(" ** TESTING addMessage ** ");
+var m2 = new MessageBoard();
 console.log(m2.addMessage('hello'));
 console.log(m2.messages.size); // 1
 console.log(m2.addMessage('awesome!')); // m
 console.log(m2.addMessage('awesome!').addMessage('nice!').addMessage('cool!')); 
 
-var m3 = new MessageBoard
+console.log(" ** TESTING findMessageById ** ");
+var m3 = new MessageBoard();
 console.log(m3.addMessage('hello!'));
 console.log(m3.addMessage('hi!'));
 console.log(m3.addMessage('whats up?'));
@@ -138,7 +142,8 @@ console.log(m3.findMessageById(3)); // 'whats up?'
 console.log(m3.findMessageById(4)); // undefined
 console.log(m3.findMessageById()); // undefined
 
-var m4 = new MessageBoard
+console.log(" ** TESTING findMessageByValue ** ");
+var m4 = new MessageBoard();
 console.log(m4.addMessage('hello!'));
 console.log(m4.addMessage('hi!'));
 console.log(m4.addMessage('whats up?'));
@@ -148,15 +153,44 @@ console.log(m4.findMessageByValue('whats up?')); // 'whats up?'
 console.log(m4.findMessageByValue('nothing here')); // undefined
 console.log(m4.findMessageByValue()); // undefined
 
+console.log(" ** TESTING removeMessage ** ");
+var m5 = new MessageBoard();
+console.log(m5.addMessage('hello!'));
+console.log(m5.addMessage('hi!'));
+console.log(m5.addMessage('whats up?'));
+console.log(m5.removeMessage(1));
+console.log(m5.removeMessage(2));
+console.log(m5.messages.size); // 1
+console.log(m5.removeMessage()); // m
+
+console.log(" ** TESTING numberOfMessages ** ");
+var m6 = new MessageBoard();
+console.log(m6.addMessage('hello!'));
+console.log(m6.addMessage('hi!'));
+console.log(m6.addMessage('whats up?'));
+console.log(m6.numberOfMessages()); // 3
+
+console.log(" ** TESTING messagesToArray ** ");
+var m7 = new MessageBoard();
+console.log(m7.addMessage('hello!'));
+console.log(m7.addMessage('hi!'));
+console.log(m7.addMessage('whats up?'));
+console.log(m7.messagesToArray()); // ['hello!', 'hi!', 'whats up?'])
+
 /*
 Write a function called uniqueValues which accepts an array and returns the number of unique values in the array
 
 uniqueValues([1,1,2,2,2,3,3,3,3,4,4,4,5,5,6]) // 6
 */
 
-function uniqueValues(){
-  
+function uniqueValues(arr){
+  return new Set(arr).size;
 }
+
+console.log();
+console.log("============================");
+console.log(" ** TESTING uniqueValues ** ");
+console.log(uniqueValues([1,1,2,2,2,3,3,3,3,4,4,4,5,5,6])); // 6
 
 /*
 
@@ -167,9 +201,16 @@ hasDuplicates([1,2,3,4,5,6]) // false
 hasDuplicates([]) // false
 */
 
-function hasDuplicates(){
-  
+function hasDuplicates(arr){
+  return arr.length !== uniqueValues(arr);
 }
+
+console.log();
+console.log("============================");
+console.log(" ** TESTING hasDuplicates ** ");
+console.log(hasDuplicates([1,1,2,2,2,3,3,3,3,4,4,4,5,5,6])); // true
+console.log(hasDuplicates([1,2,3,4,5,6])); // false
+console.log(hasDuplicates([])); // false
 
 /*
 
@@ -184,6 +225,26 @@ countPairs([5,4,-10,6,-20,16],-4) // 2
 countPairs([0,-4],-4) // 1
 */
 
-function countPairs(){
-  
+function countPairs(arr, num){
+  const st = Array.from(new Set(arr).values());
+//  console.log(st);
+  let count = 0;
+  for (let i = 0; i < st.length; i++) {
+    for (let j = i+1; j < st.length; j++) {
+//      console.log(`${st[i]} + ${st[j]}`);
+      if (st[i] + st[j] === num) count++;
+    }
+  }
+  return count;
 }
+
+console.log();
+console.log("============================");
+console.log(" ** TESTING countPairs ** ");
+console.log(countPairs([8,2,6,4,10,0],10)); // 3
+console.log(countPairs([8,2],10)); // 1
+console.log(countPairs([1,2],10)); // 0
+console.log(countPairs([1,2,3,4,5],10)); // 0
+console.log(countPairs([],10)); // 0
+console.log(countPairs([5,4,-10,6,-20,16],-4)); // 2
+console.log(countPairs([0,-4],-4)); // 1
