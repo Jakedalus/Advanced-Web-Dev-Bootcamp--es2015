@@ -32,15 +32,48 @@
         })
       }
       
-      starWarsString(1).then(function(data){
+//      starWarsString(1).then(function(data){
+//        console.log(data)
+//      });
+//      
+//      starWarsString(3).then(function(data){
+//        console.log(data)
+//      });
+//      
+//      console.log(starWarsString(1));
+      
+      console.log();
+      console.log("==================");
+      
+      async function starWarsString2(id){
+        var str = '';
+        
+        var character = await $.getJSON(`https://swapi.co/api/people/${id}/`);
+        str += `${character.name} is featured in `;
+        var filmData = character.films[0]
+        var film = await $.getJSON(filmData);
+        str += `${film.title}, directed by ${film.director} `
+        var planetData = film.planets[0]
+        var planet = await $.getJSON(planetData);
+        str += `and it takes place on ${planet.name}`;
+        return str;
+        
+        
+      }
+      
+      starWarsString2(1).then(function(data){
         console.log(data)
       });
       
-      starWarsString(3).then(function(data){
+      starWarsString2(3).then(function(data){
         console.log(data)
       });
       
-      console.log(starWarsString(1));
+      starWarsString2(9).then(function(data){
+        console.log(data)
+      });
+      
+      console.log(starWarsString2(1));
     
     </script>
   </body>
