@@ -50,12 +50,15 @@
         
         var character = await $.getJSON(`https://swapi.co/api/people/${id}/`);
         str += `${character.name} is featured in `;
+        
         var filmData = character.films[0]
         var film = await $.getJSON(filmData);
         str += `${film.title}, directed by ${film.director} `
+        
         var planetData = film.planets[0]
         var planet = await $.getJSON(planetData);
         str += `and it takes place on ${planet.name}`;
+        
         return str;
         
         
